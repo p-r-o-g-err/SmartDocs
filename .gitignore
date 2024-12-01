@@ -1,0 +1,8 @@
+venv/
+__pycache__/
+.vscode/
+.idea/
+node_modules/
+build/
+backend/app/generated_documents/
+backend/uploads/

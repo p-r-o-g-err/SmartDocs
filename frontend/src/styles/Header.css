@@ -1,0 +1,9 @@
+.header-container {
+    padding-right: 0;
+}
+
+@media (min-width: 992px) {
+    .header-container {
+        padding-right: 100px;
+    }
+}
