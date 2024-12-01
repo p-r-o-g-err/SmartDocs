@@ -120,12 +120,12 @@ function DocumentForm() {
             const initialValidity = {};
             documentForms.sections.forEach((section) => {
                 section.fields.forEach((field) => {
-                    const mockValue = generateMockData(field);
-                    initialData[field.name] = mockValue;
-                    initialValidity[field.name] = validateField(mockValue, field) === null;
+                    // const mockValue = generateMockData(field);
+                    // initialData[field.name] = mockValue;
+                    // initialValidity[field.name] = validateField(mockValue, field) === null;
 
-                    // initialData[field.name] = '';
-                    // initialValidity[field.name] = null; // null означает, что поле еще не проверено
+                    initialData[field.name] = '';
+                    initialValidity[field.name] = null; // null означает, что поле еще не проверено
                 });
             });
             setFormData(initialData);

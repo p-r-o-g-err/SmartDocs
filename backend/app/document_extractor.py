@@ -1,4 +1,4 @@
-from groq import Groq
+from groq import Groq, APITimeoutError
 from .data import DOCUMENT_FORMS
 import json
 
@@ -13,17 +13,22 @@ def extract_document_info(text, model_name="llama3-8b-8192"):
         api_key=GROQ_API_KEY, # os.environ.get("GROQ_API_KEY"),
     )
 
-    chat_completion = client.chat.completions.create(
-        messages=[
-            {
-                "role": "user",
-                "content": text
-            }
-        ],
-        model=model_name,
-    )
+    try:
+        chat_completion = client.chat.completions.create(
+            messages=[
+                {
+                    "role": "user",
+                    "content": text
+                }
+            ],
+            model=model_name,
+        )
+        return chat_completion.choices[0].message.content 
 
-    return chat_completion.choices[0].message.content 
+    except APITimeoutError:
+        print("Сервис извлечения информации недоступен. Попробуйте позже.") # raise RuntimeError
+    except Exception as e:
+        print("Произошла ошибка при извлечении данных. Попробуйте позже.") # raise RuntimeError
 
 def get_description_fields(document_type):
     result = ''
@@ -70,6 +75,6 @@ def extract(text, document_type, model_name="llama3-8b-8192"):
         return None
     return result
 
-document_type = 'order_for_development'
-text = ""
-extract(text, document_type)
+# document_type = 'order_for_development'
+# text = ""
+# extract(text, document_type)

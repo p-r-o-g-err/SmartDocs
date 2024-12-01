@@ -125,5 +125,7 @@ def init_routes(app):
 
             return jsonify(extracted_data)
 
+        except RuntimeError as re:
+            return jsonify({'error': str(re)}), 503  # Сервис временно недоступен
         except Exception as e:
-            return jsonify({'error': str(e)}), 500
+            return jsonify({'error': 'Произошла внутренняя ошибка сервера'}), 500
